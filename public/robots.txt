@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://era-qw.github.io/era-it/sitemap.xml
