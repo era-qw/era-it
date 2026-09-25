@@ -1,0 +1,397 @@
+@import "tailwindcss";
+
+/* ============================================================
+   ERA/IT — дизайн-система
+   TECH × LUXURY × MINIMALISM × DIGITAL PRODUCT
+   ============================================================ */
+
+@theme {
+  --color-bg: #000000;
+  --color-fg: #ffffff;
+  --color-accent: #afddff;
+
+  --color-muted: rgba(255, 255, 255, 0.5);
+  --color-faint: rgba(255, 255, 255, 0.32);
+  --color-line: rgba(255, 255, 255, 0.14);
+  --color-line-strong: rgba(255, 255, 255, 0.3);
+  --color-grid: rgba(255, 255, 255, 0.04);
+  --color-panel: rgba(255, 255, 255, 0.02);
+
+  --font-display: "Manrope", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swift: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ---------- base ---------- */
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #000;
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border: 3px solid #000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(175, 221, 255, 0.4);
+}
+
+/* ---------- техническая сетка и свечение ---------- */
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.bg-grid-fine {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.grid-fade {
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 38%, #000 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 38%, #000 55%, transparent 100%);
+}
+
+.glow-accent {
+  background: radial-gradient(
+    closest-side,
+    rgba(175, 221, 255, 0.13),
+    rgba(175, 221, 255, 0.05) 45%,
+    transparent 72%
+  );
+}
+
+/* ---------- reveal-система (IntersectionObserver) ---------- */
+
+.rv {
+  opacity: 0;
+  transition:
+    opacity 0.9s var(--ease-out-expo) var(--rvd, 0ms),
+    transform 0.9s var(--ease-out-expo) var(--rvd, 0ms);
+}
+.rv-up {
+  transform: translateY(26px);
+}
+.rv-fade {
+  transform: none;
+}
+.rv-left {
+  transform: translateX(-30px);
+}
+.rv-right {
+  transform: translateX(30px);
+}
+.rv-scale {
+  transform: scale(0.965);
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- анимация отрисовки SVG-линий ---------- */
+
+.draw [data-draw] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.5s var(--ease-out-expo);
+  transition-delay: var(--dd, 0ms);
+}
+.draw.in [data-draw],
+.in .draw [data-draw] {
+  stroke-dashoffset: 0;
+}
+
+/* для hero — рисование сразу после загрузки, без observer */
+.draw-auto [data-draw] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: svg-draw 1.6s var(--ease-out-expo) forwards;
+  animation-delay: var(--dd, 0ms);
+}
+@keyframes svg-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.fade-late {
+  opacity: 0;
+  animation: fade-late 1.2s ease-out 0.9s forwards;
+}
+@keyframes fade-late {
+  to {
+    opacity: 0.65;
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 26s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.drift {
+  animation: drift 11s ease-in-out infinite;
+}
+.drift-slow {
+  animation: drift 14s ease-in-out infinite reverse;
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ---------- бегущая строка ---------- */
+
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- индикаторы ---------- */
+
+.pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.scroll-line {
+  animation: scroll-line 2.2s var(--ease-swift) infinite;
+}
+@keyframes scroll-line {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* линия прогресса таймлайна процесса */
+.pline {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.8s var(--ease-out-expo) 0.2s;
+}
+.in .pline {
+  transform: scaleY(1);
+}
+
+/* точки-узлы таймлайна */
+.node-dot {
+  opacity: 0;
+  transition: opacity 0.6s ease 0.35s;
+}
+.in .node-dot {
+  opacity: 1;
+}
+
+/* ---------- форма ---------- */
+
+.field {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--color-line);
+  border-radius: 0;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  color: var(--color-fg);
+  appearance: none;
+  transition:
+    border-color 0.35s var(--ease-swift),
+    background-color 0.35s var(--ease-swift);
+}
+.field::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+.field:hover:not(:focus) {
+  border-color: var(--color-line-strong);
+}
+.field:focus {
+  outline: none;
+  border-color: rgba(175, 221, 255, 0.65);
+  background: rgba(175, 221, 255, 0.03);
+}
+select.field option {
+  background: #050505;
+  color: #fff;
+}
+
+/* ---------- FAQ-аккордеон ---------- */
+
+.faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-out-expo);
+}
+.faq-body.open {
+  grid-template-rows: 1fr;
+}
+.faq-body > div {
+  overflow: hidden;
+}
+
+/* ---------- структурная сетка: линии + кресты на пересечениях ---------- */
+
+.anim-grid-v {
+  opacity: 0;
+  transform-origin: top;
+  animation: grid-reveal-v 1.2s var(--ease-out-expo) forwards;
+}
+.anim-grid-h {
+  opacity: 0;
+  transform-origin: left;
+  animation: grid-reveal-h 1.2s var(--ease-out-expo) forwards;
+}
+@keyframes grid-reveal-v {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+@keyframes grid-reveal-h {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+.anim-pop {
+  opacity: 0;
+  animation: pop-in 0.7s var(--ease-out-expo) forwards;
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rv,
+  .draw [data-draw] {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .draw-auto [data-draw],
+  .marquee-track,
+  .pulse-dot,
+  .drift,
+  .drift-slow,
+  .scroll-line,
+  .spin-slow,
+  .fade-late,
+  .anim-grid-v,
+  .anim-grid-h,
+  .anim-pop {
+    animation: none !important;
+  }
+  .draw-auto [data-draw],
+  .fade-late,
+  .anim-grid-v,
+  .anim-grid-h,
+  .anim-pop {
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+    transform: none !important;
+  }
+  .pline,
+  .node-dot {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
