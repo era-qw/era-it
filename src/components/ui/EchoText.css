@@ -1,0 +1,15 @@
+.echo-text {
+  position: relative;
+  display: inline-block;
+}
+
+.echo-text__echo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+}
+
+.echo-text__echo--front {
+  position: relative;
+}
