@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ЗАМЕНИТЕ https://USERNAME.github.io/REPO-NAME/ на реальный адрес сайта после публикации -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://USERNAME.github.io/REPO-NAME/</loc>
+    <loc>https://era-qw.github.io/era-it/</loc>
     <lastmod>2026-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
