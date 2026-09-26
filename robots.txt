@@ -1,6 +1,4 @@
-# ЗАМЕНИТЕ домен ниже на реальный адрес вашего сайта после публикации
-# (например: https://username.github.io/era-it/sitemap.xml)
 User-agent: *
 Allow: /
 
-Sitemap: https://USERNAME.github.io/REPO-NAME/sitemap.xml
+Sitemap: https://era-qw.github.io/era-it/sitemap.xml
